@@ -1,11 +1,15 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.10-slim'
+        }
+    }
 
     stages {
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                sh 'pip install --no-cache-dir -r requirements.txt'
             }
         }
 
@@ -23,7 +27,7 @@ pipeline {
 
         stage('Archive Artifacts') {
             steps {
-                archiveArtifacts artifacts: 'model.pkl,metrics.json', fingerprint: true
+                archiveArtifacts artifacts: 'model.pkl, metrics.json', fingerprint: true
             }
         }
     }
