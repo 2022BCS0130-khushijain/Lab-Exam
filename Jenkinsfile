@@ -1,21 +1,17 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.10-slim'
-        }
-    }
+    agent any
 
     stages {
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip install --no-cache-dir -r requirements.txt'
+                sh 'python3 -m pip install --user -r requirements.txt'
             }
         }
 
         stage('Train Model') {
             steps {
-                sh 'python train.py'
+                sh 'python3 train.py'
             }
         }
 
